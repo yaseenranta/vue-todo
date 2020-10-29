@@ -46,12 +46,16 @@ export default {
     eventBus.$on('removeItem', (index) => this.removeTodo(index))
     eventBus.$on('pluralize',(index) => this.handlePluralize(index))
     eventBus.$on('checkAll',this.checkAll);
-    eventBus.$on('filterTodos', (filter) => {
-
-        this.filter = filter
-
-    })
+    eventBus.$on('filterTodos', (filter) => this.filter = filter)
     eventBus.$on('clearCompleted',this.clearCompleted)       
+  },
+  beforeDestroy() {
+    eventBus.$off('doneEdit', (data) => this.doneEdit(data))
+    eventBus.$off('removeItem', (index) => this.removeTodo(index))
+    eventBus.$off('pluralize',(index) => this.handlePluralize(index))
+    eventBus.$off('checkAll',this.checkAll);
+    eventBus.$off('filterTodos', (filter) => this.filter = filter)
+    eventBus.$off('clearCompleted',this.clearCompleted)       
   },
   data : function(){
       return {
