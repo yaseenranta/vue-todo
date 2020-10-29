@@ -2,22 +2,9 @@
   <div class="todolist ">
       <input type="text" class="todo-input" @keyup.enter="addNewTodo" v-model="newtodo">
         <transition-group name="fade" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-          <div class="todo-item" v-for="(todo,index) in filteredtodos" :key="todo.id">
-              <div class="todo-item-left">
-                  <input type="checkbox" v-model="todo.isCompleted"/>
-                  <div v-if="!todo.isEditing" class="todo-item-label" :class="{completed : todo.isCompleted}" @dblclick="editTodo(todo)" >
-                      {{todo.title}}
-                  </div>
-                  <input v-else type="text" class="todo-item-edit" 
-                  v-model="todo.title" 
-                  v-on:blur="doneEdit(todo)" @keyup.esc="cancelTodo(todo)" 
-                  @keyup.enter="doneEdit(todo)" v-focus>
-                  
-              </div>
-              <div class="remove-item" @click="removeTodo(index)">
-                  &times
-              </div>
-          </div>        
+          <todoItem  v-for="(todo,index) in filteredtodos" 
+            :key="todo.id" :index="index" :todo="todo" :anyRemaining="!anyRemaining"
+            @removeItem="removeTodo" @doneEdit="doneEdit"></todoItem>        
         </transition-group>      
 
       <div class="extra-container">
@@ -34,7 +21,7 @@
         </div>
         <div>
             <transition name="fade">
-              <button v-if="showClearCompleted" @click="clearCompleted()">Clear Completed</button>            
+              <button v-if="showClearCompleted" @click="clearCompleted()" >Clear Completed</button>            
             </transition>
         </div>
       </div>
@@ -43,10 +30,11 @@
 </template>
 
 <script>
+import todoItem from '@/components/TodoItem.vue'
 export default {
   name: 'TodoList',
-  props: {
-    msg: String
+  components : {
+    todoItem
   },
   data : function(){
       return {
@@ -69,14 +57,6 @@ export default {
          ],            
       }
   },
-  directives: {
-    focus: {
-      // directive definition
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
   methods : {
       addNewTodo(){
           let todoId = this.todos.length;
@@ -93,24 +73,10 @@ export default {
 
           this.newtodo = '';
       },
-      editTodo(todo,index){
-          todo.isEditing =true;
-        //   this.todos[index].isEditing = true;
-          this.titleCachebefore = todo.title;
+      doneEdit(data){
 
-      },
-      doneEdit(todo){
-          if(todo.title.trim() == ''){
-             todo.title = this.titleCachebefore;
-          }
-          todo.isEditing = false;
-          this.titleCachebefore = '';    
-          console.log('blur')
-      },
-      cancelTodo(todo){
-          todo.isEditing = false;
-          todo.title = this.titleCachebefore;
-          
+          // this.todos[data.index] = data.todo
+          this.todos.splice(data.index,1,data.todo)
       },
       removeTodo(index){
           this.todos.splice(index,1)
