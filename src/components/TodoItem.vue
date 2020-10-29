@@ -11,6 +11,9 @@
             @keyup.enter="doneEdit" v-focus>
             
         </div>
+        <!-- <span>
+            <pluralizeButton :index="index"></pluralizeButton>
+        </span> -->
         <div class="remove-item" @click="removeTodo(index)">
             &times
         </div>
@@ -18,9 +21,14 @@
 </template>
 
 <script>
+import pluralizeButton from '@/components/Pluralize.vue'
+
 export default {
     name : 'todo-item',
     props : ['todo','index','anyRemaining'],
+    components : {
+        pluralizeButton
+    },
     data (){
         return {
             titleCachebefore : null,
@@ -44,6 +52,10 @@ export default {
             }else{
                 this.isCompleted = this.todo.isCompleted;
             }
+        },
+        'todo.title' : function(newtitle,oldtitle){
+            if(newtitle != oldtitle)
+            this.title = newtitle;
         }
     },
     created() {
@@ -51,10 +63,11 @@ export default {
         this.title = this.todo.title
         this.isCompleted = this.todo.isCompleted
         this.isEditing = this.todo.isEditing
+
     },
     methods: {
         removeTodo(index){
-            this.$emit('removeItem',index)
+            eventBus.$emit('removeItem',index)
         },
         editTodo(){
             this.isEditing = true;       
@@ -67,7 +80,7 @@ export default {
             this.isEditing = false;
             this.titleCachebefore = '';    
 
-            this.$emit('doneEdit',{
+            eventBus.$emit('doneEdit',{
             index : this.index,
             todo  : {
               id          : this.id,
@@ -75,7 +88,7 @@ export default {
               isCompleted : this.isCompleted,
               isEditing   : this.isEditing,
             }        
-        })
+            })
         },
         cancelTodo(){
             this.isEditing = false;
