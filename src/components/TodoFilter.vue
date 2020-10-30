@@ -17,8 +17,8 @@ export default {
     methods : {
 
         filterTodos(filter){
-           this.filter = filter
-            eventBus.$emit('filterTodos',filter)
+            this.filter = filter
+            this.$store.commit('filteredtodos',filter)
         }
     }
 }

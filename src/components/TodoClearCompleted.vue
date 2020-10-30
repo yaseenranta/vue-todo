@@ -6,10 +6,16 @@
 <script>
 export default {
     name  : 'todos-clear-completed',
-    props : ['showClearCompleted'],
     methods: {
         clearCompleted(){
-            eventBus.$emit('clearCompleted')       
+
+            this.$store.commit('clearCompleted')
+            // eventBus.$emit('clearCompleted')       
+        }
+    },
+    computed: {
+        showClearCompleted(){
+            return this.$store.getters.showClearCompleted;
         }
     },
 }

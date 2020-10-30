@@ -5,8 +5,86 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    filter : 'all',
+    todos : [
+        {
+        id          : 1,
+        title        : "Todo Item 1",
+        isCompleted : false,
+        isEditing   : false,
+        },
+        {
+        id          : 2,
+        title        : "Todo Item 2",
+        isCompleted : false,
+        isEditing   : false
+        }
+    ]
   },
-  mutations: {
+  mutations : {
+    addNewTodo(state,todo){
+
+      state.todos.push(todo)
+    },
+    doneEdit(state,data){
+
+      let index = state.todos.findIndex(item => item.id == data.id)
+      state.todos.splice(index,1,data)
+      
+    },
+    removeTodo(state,id){
+        let index = state.todos.findIndex(item => item.id == id)
+        state.todos.splice(index,1)
+    },
+    checkAll(state,checked){
+      state.todos.forEach(todo => { todo.isCompleted = checked });
+    },
+    clearCompleted(state){
+      state.todos = state.todos.filter(todo => !todo.isCompleted);
+    },
+    filteredtodos(state,filter){
+       state.filter = filter 
+    },
+    handlePluralize (state,id){
+      let index = state.todos.findIndex(item => item.id == id)
+      let todo = state.todos[index]  
+      todo.title = todo.title + 's';  
+        eventBus.$emit('doneEdit',{
+          index : index,
+          todo : todo
+        }) 
+    }
+  },
+  getters: {
+    
+    remaining(state){
+      return state.todos.filter(todo => !todo.isCompleted).length;
+    },
+    
+    anyRemaining(state,getters){
+      if(state.todos.length == 0){
+        return true;
+      }
+      return getters.remaining != 0;
+    },
+    
+    filteredtodos(state){
+      if (state.filter == 'all') {
+        return state.todos;
+      }else if(state.filter == 'active'){
+        return state.todos.filter(todo => !todo.isCompleted);
+
+      }else if(state.filter == 'completed'){
+        return state.todos.filter(todo => todo.isCompleted);
+
+      }
+      return state.todos;
+    },
+    
+    showClearCompleted(state){
+      return state.todos.filter(todo => todo.isCompleted).length > 0;
+    }
+
   },
   actions: {
   },

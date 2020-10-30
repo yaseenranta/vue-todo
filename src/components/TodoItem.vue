@@ -11,10 +11,10 @@
             @keyup.enter="doneEdit" v-focus>
             
         </div>
-        <!-- <span>
-            <pluralizeButton :index="index"></pluralizeButton>
-        </span> -->
-        <div class="remove-item" @click="removeTodo(index)">
+        <span>
+            <pluralizeButton :id="id"></pluralizeButton>
+        </span>
+        <div class="remove-item" @click="removeTodo">
             &times
         </div>
     </div>   
@@ -66,28 +66,27 @@ export default {
 
     },
     methods: {
-        removeTodo(index){
-            eventBus.$emit('removeItem',index)
+        removeTodo(){            
+            this.$store.commit('removeTodo',this.id);
         },
         editTodo(){
             this.isEditing = true;       
             this.titleCachebefore = this.title;
         },
         doneEdit(){
+            
             if(this.title.trim() == ''){
                 this.title = this.titleCachebefore;
             }
+
             this.isEditing = false;
             this.titleCachebefore = '';    
 
-            eventBus.$emit('doneEdit',{
-            index : this.index,
-            todo  : {
+            this.$store.commit('doneEdit',{
               id          : this.id,
               title       : this.title,
               isCompleted : this.isCompleted,
               isEditing   : this.isEditing,
-            }        
             })
         },
         cancelTodo(){
@@ -95,8 +94,6 @@ export default {
             this.title = this.titleCachebefore;            
         }    
     },
-    computed : {
-
-    }
+    
 }
 </script>

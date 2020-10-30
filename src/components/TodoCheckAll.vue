@@ -10,11 +10,15 @@
 <script>
 export default {
     name : 'TodoCheckAll',
-    props : ['anyRemaining'],
     methods : {
         checkAll(){
-            eventBus.$emit('checkAll');
+            this.$store.commit('checkAll',event.target.checked)
         }
-    }
+    },
+    computed: {
+        anyRemaining(){
+            return this.$store.getters.anyRemaining;
+        }
+    },
 }
 </script>

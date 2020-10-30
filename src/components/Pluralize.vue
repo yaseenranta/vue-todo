@@ -1,6 +1,6 @@
 <template>
     <span>
-        <button @click="pluralize()">Pluralize</button>
+        <button @click="pluralize">Pluralize</button>
     </span>
 </template>
 
@@ -8,10 +8,10 @@
 <script>
 export default {
     name : 'pluralize',
-    props : ['index'],
+    props : ['id'],
     methods : {
         pluralize(){
-            eventBus.$emit('pluralize',this.index);
+            this.$store.commit('handlePluralize',this.id)
         }
     }
 }

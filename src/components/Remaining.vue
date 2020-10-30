@@ -6,11 +6,13 @@
 <script>
 export default {
     name : 'remaining',
-    props : ['remaining'],
     methods : {
-        pluralize(){
-            eventBus.$emit('pluralize',this.index);
+        
+    },
+    computed: {
+        remaining(){
+            return this.$store.getters.remaining;
         }
-    }
+    },
 }
 </script>
