@@ -87,6 +87,55 @@ export default new Vuex.Store({
 
   },
   actions: {
+    addNewTodo(context,todo){
+
+      setTimeout(() => {
+        context.commit('addNewTodo',todo)        
+      }, 1000);
+      
+    },
+    doneEdit(context,data){
+
+      setTimeout(() => {
+        context.commit('doneEdit',data)      
+      }, 1000);
+
+    },
+    removeTodo(context,id){
+      
+      setTimeout(() => {
+        context.commit('removeTodo',id)      
+      }, 1000);
+
+    },
+    checkAll(context,checked){
+
+      setTimeout(() => {
+        context.commit('checkAll',checked)
+      }, 1000);
+
+    },
+    clearCompleted(context){
+
+      setTimeout(() => {
+        context.commit('clearCompleted')   
+      }, 1000);   
+
+    },
+    filteredtodos(context,filter){
+      
+      setTimeout(() => {
+        context.commit('filteredtodos',filter)        
+      }, 1000);
+
+    },
+    handlePluralize (context,id){
+      
+      setTimeout(() => {
+        context.commit('handlePluralize',id)            
+      }, 1000);
+
+    }
   },
   modules: {
   }

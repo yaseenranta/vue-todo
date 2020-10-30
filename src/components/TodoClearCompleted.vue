@@ -8,9 +8,7 @@ export default {
     name  : 'todos-clear-completed',
     methods: {
         clearCompleted(){
-
-            this.$store.commit('clearCompleted')
-            // eventBus.$emit('clearCompleted')       
+            this.$store.dispatch('clearCompleted')
         }
     },
     computed: {

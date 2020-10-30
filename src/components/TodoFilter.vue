@@ -18,7 +18,7 @@ export default {
 
         filterTodos(filter){
             this.filter = filter
-            this.$store.commit('filteredtodos',filter)
+            this.$store.dispatch('filteredtodos',filter)
         }
     }
 }

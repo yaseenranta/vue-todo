@@ -11,7 +11,7 @@ export default {
     props : ['id'],
     methods : {
         pluralize(){
-            this.$store.commit('handlePluralize',this.id)
+            this.$store.dispatch('handlePluralize',this.id)
         }
     }
 }

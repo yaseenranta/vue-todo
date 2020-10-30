@@ -52,7 +52,7 @@ export default {
           if(this.newtodo.trim().length == 0){
               return;
           }
-          this.$store.commit('addNewTodo' ,{
+          this.$store.dispatch('addNewTodo' ,{
               id : todoId + 1,
               title : this.newtodo,
               isCompleted : false,
