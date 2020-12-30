@@ -4,15 +4,17 @@
 
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
     name : 'remaining',
     methods : {
         
     },
     computed: {
-        remaining(){
-            return this.$store.getters.remaining;
-        }
+
+        ...mapGetters('todo',{
+            'remaining' : 'remaining'
+        })
     },
 }
 </script>

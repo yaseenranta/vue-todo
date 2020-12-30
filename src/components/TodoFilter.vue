@@ -18,7 +18,7 @@ export default {
 
         filterTodos(filter){
             this.filter = filter
-            this.$store.dispatch('filteredtodos',filter)
+            this.$store.dispatch('todo/filteredtodos',filter)
         }
     }
 }

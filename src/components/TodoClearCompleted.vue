@@ -4,17 +4,19 @@
     </div>
 </template>
 <script>
+ import {mapGetters} from 'vuex'
 export default {
     name  : 'todos-clear-completed',
     methods: {
         clearCompleted(){
-            this.$store.dispatch('clearCompleted')
+            this.$store.dispatch('todo/clearCompleted')
         }
     },
     computed: {
-        showClearCompleted(){
-            return this.$store.getters.showClearCompleted;
-        }
+        ...mapGetters( 'todo',{
+           'showClearCompleted' :  'showClearCompleted'
+        })
+
     },
 }
 </script>

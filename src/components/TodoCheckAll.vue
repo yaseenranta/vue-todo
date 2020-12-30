@@ -8,17 +8,19 @@
 
 
 <script>
+ import {mapGetters} from 'vuex'
 export default {
     name : 'TodoCheckAll',
     methods : {
         checkAll(){
-            this.$store.dispatch('checkAll',event.target.checked)
+            this.$store.dispatch('todo/checkAll',event.target.checked)
         }
     },
     computed: {
-        anyRemaining(){
-            return this.$store.getters.anyRemaining;
-        }
+        ...mapGetters('todo',{
+          'anyRemaining'  : 'anyRemaining'  
+        })
+        
     },
 }
 </script>

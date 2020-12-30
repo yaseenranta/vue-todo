@@ -30,6 +30,7 @@ import TodoCheckAll from '@/components/TodoCheckAll.vue'
 import TodoFilter from '@/components/TodoFilter.vue'
 import TodoClearCompleted from '@/components/TodoClearCompleted.vue'
 
+import {mapGetters,mapState,mapActions} from 'vuex'
 
 export default {
   name: 'TodoList',
@@ -48,11 +49,11 @@ export default {
   },
   methods : {
       addNewTodo(){
-          let todoId = this.$store.state.todos.length;
+          let todoId = this.$store.state.todo.todos.length;
           if(this.newtodo.trim().length == 0){
               return;
           }
-          this.$store.dispatch('addNewTodo' ,{
+          this.$store.dispatch('todo/addNewTodo' ,{
               id : todoId + 1,
               title : this.newtodo,
               isCompleted : false,
@@ -64,13 +65,12 @@ export default {
                   
   },
   computed : {
-  
-    filteredtodos(){
-      return this.$store.getters.filteredtodos;
-    },
-    anyRemaining(){
-        return this.$store.getters.anyRemaining;
-      }    
+
+    ...mapGetters('todo', {
+      filteredtodos: 'filteredtodos',
+      anyRemaining: 'anyRemaining'
+    })
+    
   }
 }
 </script>
